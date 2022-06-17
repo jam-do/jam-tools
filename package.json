@@ -1,0 +1,14 @@
+{
+  "name": "@jam-do/jam-tools",
+  "version": "0.0.1",
+  "description": "JavaScript utils for the static pages generation",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "alex.sova@pm.me",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.0.0"
+  }
+}
