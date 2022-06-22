@@ -4,4 +4,4 @@ export { cssMin } from './cssMin.js';
 export { buildHtml } from './buildHtml.js';
 export { fromUrl } from './fromUrl.js';
 export { colorCode } from './colorCode.js';
-export * as jamImport from './jamImport.js';
+// export * as jamImport from './jamImport.js';

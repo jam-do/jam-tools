@@ -5,7 +5,7 @@ try {
 let resourcePath = import.meta.url.split('?')[1];
 /** @type {String} */
 let resource;
-if (resourcePath.includes('//')) {
+if (resourcePath?.includes('//')) {
   resource = await (await fetch(resourcePath)).text();
 } else if (fs) {
   resource =  fs.readFileSync(resourcePath).toString();
