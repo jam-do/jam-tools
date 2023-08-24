@@ -20,6 +20,7 @@ const topicCtxMap = {
   Use the "prompt" attribute for this "x-ai-img" custom tags for the image generation.
   IMPORTANT: use the good and safe prompts, try to not violate your own rules.
   Try to suggest detailed prompts to make images more relevant.
+  Write prompts using English.
   IMPORTANT: inner HTML is not allowed in the <x-ai-img> tags, keep them empty.
   Do not forget to close <x-ai-img> tags right after the opening.
   Use <section> tags to make generated content structured.

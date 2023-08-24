@@ -3,6 +3,7 @@ import 'dotenv/config';
 const CFG = Object.freeze({
   srcDir: process.argv[2] || process.env.SRC_DIR || './',
   outDir: process.argv[3] || process.env.OUT_DIR || './dist/',
+  cacheDir: process.env.CACHE_DIR || './.CACHE/',
   processor: process.argv[4] || process.env.HANDLER_SCRIPT_PATH || 'jam-tools/node/build.js',
   
   aiApiKey: process.env.AI_API_KEY,

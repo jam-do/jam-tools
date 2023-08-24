@@ -11,5 +11,6 @@ const aiConnector = new AiConnector(CFG.aiOrgId, CFG.aiApiKey);
  */
 export async function aiFragment(prompt) {
   let aiHtml = await aiConnector.html(prompt);
+  console.log(`AI HTML Fragment created for: ${prompt}`);
   return await processAiImages(aiHtml, aiConnector);
 }

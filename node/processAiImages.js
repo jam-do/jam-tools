@@ -8,13 +8,14 @@ import { b64Src } from '../iso/b64Src.js';
  * @returns {Promise<String>}
  */
 export async function processAiImages(html, aiConnector) {
-  let fragment = jsdom.JSDOM.fragment(html);
+  let fragment = jsdom.JSDOM.fragment(`<div>${html}</div>`);
   let aiImages = [...fragment.querySelectorAll('x-ai-img')];
   for (let i = 0; i < aiImages.length; i++) {
     let aiImg = aiImages[i];
     let prompt = aiImg.getAttribute('prompt');
     let b64Img = await aiConnector.createImage(prompt);
-    aiImg.outerHTML = `<img src="${b64Src(b64Img, 'image/png')}" alt="${prompt}" />`;
+    aiImg.outerHTML = `<img ai src="${b64Src(b64Img, 'image/png')}" alt="${prompt}" />`;
+    console.log(`(${i + 1}/${aiImages.length}) AI Image created for: ${prompt}`);
   }
-  return fragment.serialize();
+  return fragment.firstChild.innerHTML;
 }

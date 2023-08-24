@@ -48,7 +48,7 @@ async function impWa(path) {
       }
       result = str;
     } catch (e) {
-      console.log('WRONG WA PATH: ' + mdlUrl);
+      console.log(e);
     }
   }
   return result;
