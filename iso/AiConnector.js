@@ -1,13 +1,13 @@
+import OpenAI from 'openai';
+// /** @type {import('openai')} */
+// let OpenAI;
 
-/** @type {import('openai')} */
-let openai;
-
-if (typeof window !== 'undefined') {
-  const networkImport = (await import('./networkImport.js')).networkImport;
-  openai = await networkImport('openai@3.3.0');
-} else {
-  openai = await import('openai');
-}
+// if (typeof window !== 'undefined') {
+//   const networkImport = (await import('./networkImport.js')).networkImport;
+//   OpenAI = await networkImport('openai');
+// } else {
+//   OpenAI = await import('openai');
+// }
 
 const topicCtxMap = {
   htmlStart: `This question may contain 2 parts: the text prompt an the structured HTML template to process.`,
@@ -41,8 +41,6 @@ const topicCtxMap = {
 
 export class AiConnector {
 
-  #cfg;
-
   /** @type {Object<string, String>} */
   responseMap = {}
 
@@ -50,14 +48,17 @@ export class AiConnector {
    * 
    * @param {String} orgId Organization ID
    * @param {String} apiKey OpenAI API Key
-   * @param {String} [modelName] ChatGPT model name. Default: gpt-3.5-turbo
+   * @param {String} [modelName] ChatGPT model name. Default: gpt-4-1106-preview
    */
-  constructor(orgId, apiKey, modelName = 'gpt-3.5-turbo') {
-    this.#cfg = new openai.Configuration({
+  constructor(orgId, apiKey, modelName = 'gpt-4-1106-preview') {
+    // this.#cfg = new OpenAI.Configuration({
+    //   organization: orgId,
+    //   apiKey: apiKey,
+    // });
+    this.ai = new OpenAI({
+      apiKey,
       organization: orgId,
-      apiKey: apiKey,
     });
-    this.ai = new openai.OpenAIApi(this.#cfg);
     this.modelName = modelName;
   }
 
@@ -67,16 +68,22 @@ export class AiConnector {
    * @returns {Promise<String>}
    */
   async html(prompt) {
-    let resp = await this.ai.createChatCompletion({
+    let completion = await this.ai.chat.completions.create({
       model: this.modelName,
+      seed: 12345,
+      temperature: 0.5,
       messages: [
+        {
+          role: 'system',
+          content: 'You are a HTML-code generator that helps to create websites.',
+        },
         { 
           role: 'user',
           content: topicCtxMap.htmlStart + ' ' + prompt + ' ' + topicCtxMap.htmlEnd,
         },
       ],
     });
-    return resp.data.choices[0].message.content;
+    return completion.choices[0].message.content;
   }
 
   async js(prompt) {
@@ -93,7 +100,7 @@ export class AiConnector {
    * @returns {Promise<String>}
    */
   async text(prompt) {
-    let response = await this.ai.createChatCompletion({
+    let completion = await this.ai.chat.completions.create({
       model: this.modelName,
       messages: [
         {
@@ -102,24 +109,25 @@ export class AiConnector {
         },
       ],
     });
-    return response.data.choices[0].message.content;
+    return completion.choices[0].message.content;
   }
 
   /**
    * 
    * @param {String} prompt 
-   * @param {256 | 512 | 1024} [size] 
+   * @param {'1024x1024' | '1024x1792' | '1792x1024'} [size] 
    * @returns {Promise<String>}
    */
-  async createImage(prompt, size = 256) {
-    let resp = await this.ai.createImage({
+  async createImage(prompt, size = '1024x1024') {
+    let resp = await this.ai.images.generate({
+      model: 'dall-e-3',
       prompt: prompt + ' ' + topicCtxMap.img,
       n: 1,
       // @ts-ignore
-      size: `${size}x${size}`,
+      size: size,
       response_format: 'b64_json',
     });
-    return resp.data.data[0].b64_json;
+    return resp.data[0].b64_json;
   }
 
 }
