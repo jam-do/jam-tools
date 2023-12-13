@@ -1,7 +1,7 @@
 import fs from 'fs';
 import CFG from './CFG.js';
 import { checkDirExists } from './checkDirExists.js';
-import { findFiles } from '@jam-do/jam-tools/node/index.js';
+import { findFiles } from './findFiles.js';
 import esbuild from 'esbuild';
 
 /**
