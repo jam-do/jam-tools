@@ -1,4 +1,4 @@
-export default {
+export const MIME_MAP = {
   '.ico': 'image/x-icon',
   '.html': 'text/html',
   '.htm': 'text/html',
@@ -18,3 +18,5 @@ export default {
   '.doc': 'application/msword',
   '.zip': 'application/zip',
 };
+
+export default MIME_MAP;

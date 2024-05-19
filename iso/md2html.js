@@ -1,9 +1,6 @@
-// @ts-ignore
-import { marked } from 'https://esm.sh/marked@5.1.1?bundle';
-// @ts-ignore
-import { markedHighlight } from 'https://esm.sh/marked-highlight@2.0.1?bundle';
-// @ts-ignore
-import hljs from 'https://esm.sh/highlight.js@11.8.0?bundle';
+import { marked } from 'marked';
+import { markedHighlight } from 'marked-highlight';
+import hljs from 'highlight.js';
 
 marked.use(markedHighlight({
   langPrefix: 'hljs language-',
@@ -14,9 +11,8 @@ marked.use(markedHighlight({
 }));
 
 /**
- * 
- * @param {String} mdTxt 
- * @returns {String}
+ * Transforms the input markdown text into the HTML format
+ * @param {String} mdTxt source markdown
  */
 export function md2html(mdTxt) {
   return marked.parse(mdTxt);

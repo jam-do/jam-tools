@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import url from 'node:url';
 import path from 'node:path';
 
-import MIME_MAP from './MIME_MAP.js';
+import MIME_MAP from '../iso/MIME.js';
 
 export class Dwa2Http {
 
@@ -36,6 +36,8 @@ export class Dwa2Http {
         'html',
         'css',
         'svg',
+        'md',
+        'json',
       ];
 
       let dwaType = dwaList.find((type) => {

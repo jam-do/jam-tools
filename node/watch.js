@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { execFile } from 'child_process';
 
-let srcDir = process.argv[2] || process.env.SRC_DIR || './';
+let srcDir = process.argv[2] || process.env.SRC_DIR || './src/';
 let processor = process.argv[3] || process.env.HANDLER_SCRIPT_PATH || './node_modules/jam-tools/node/build.js';
 
 let watchTimeout;
