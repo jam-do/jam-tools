@@ -1,6 +1,6 @@
 {
   "name": "@jam-do/jam-tools",
-  "version": "0.0.13",
+  "version": "0.1.0",
   "description": "JavaScript utils for the static pages generation",
   "type": "module",
   "scripts": {
