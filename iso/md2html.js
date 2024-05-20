@@ -4,6 +4,7 @@ import hljs from 'highlight.js';
 
 marked.use(markedHighlight({
   langPrefix: 'hljs language-',
+  async: false,
   highlight(code, lang) {
     const language = hljs.getLanguage(lang) ? lang : 'plaintext';
     return hljs.highlight(code, {language}).value;

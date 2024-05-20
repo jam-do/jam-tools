@@ -21,9 +21,7 @@ function fmtPath(path) {
  * @returns {Promise<String>}
  */
 async function impWa(path) {
-  console.log('WA INPUT PATH: ' + path);
   let result = null;
-  // path = fmtPath(path);
   if (path.includes('/index.js')) {
     let buildResult = esbuild.buildSync({
       entryPoints: [path],
@@ -37,9 +35,7 @@ async function impWa(path) {
     result = buildResult.outputFiles[0].text;
   } else {
     let processRoot = process.cwd();
-    console.log('PROCESS ROOT: ' + processRoot);
     let mdlUrl = 'file://' + processRoot + '/' + path;
-    console.log('WA IMPORT PATH: ' + mdlUrl);
     try {
       let str = (await import(mdlUrl)).default;
       if (str.constructor === Function) {
@@ -67,12 +63,14 @@ async function impWa(path) {
     outPath = outPath.replace('.js', '');
   }
   outPath = outPath.replace(fmtPath(CFG.srcDir), fmtPath(CFG.outDir));
-  checkDirExists(CFG.outDir);
+  checkDirExists(outPath);
   fs.writeFileSync(outPath, indexSrc);
+  console.log('Output file created: ' + outPath);
 }
 
 export function build() {
   let indexArr = findFiles(CFG.srcDir, ['index.', '.js'], []);
+  console.log('Processing DWA files:');
   console.log(indexArr);
   indexArr.forEach((indexPath) => {
     processIndex(indexPath);
