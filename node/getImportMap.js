@@ -46,9 +46,9 @@ export default function getImportMap(
   return /*html*/ `
     <script type="importmap">${JSON.stringify(iMap, undefined, 2)}</script>
     <!-- Import maps polyfill for older browsers without import maps support (eg Safari 16.3) -->
-    <script async src="${getUrl('es-module-shims')}" crossorigin="anonymous"></script>
+    <script async src="${getUrl('es-module-shims')}" crossorigin="anonymous" type="module"></script>
     <!-- Customizable built-in elements polyfill (Safari) -->
-    <script async src="${getUrl('@ungap/custom-elements')}" crossorigin="anonymous"></script>
+    <script async src="${getUrl('@ungap/custom-elements')}" crossorigin="anonymous" type="module"></script>
     <!-- Preload dependencies for speed -->
     ${Object.values(iMap.imports).map((url) => {
       return /*html*/ `<link rel="modulepreload" href="${url}"/>`;
