@@ -13,7 +13,13 @@ export function htmlMin(html) {
       if (idx === 0 && i !== 0) {
         return pre;
       } else {
-        pre = pre.replaceAll('\n', ' ');
+        pre = pre.replaceAll('\n', ' ')
+          .replace(/[^< >]+ </g, (match) => {
+            return match.replace(' <', '&nbsp;<');
+          })
+          .replaceAll(/> +[^< >]/g, (match) => {
+            return match.replace('> ', '>&nbsp;');
+          });
         for (let subStr in REPLACE_MAP) {
           while (pre.includes(subStr)) {
             pre = pre.replaceAll(subStr, REPLACE_MAP[subStr]);
