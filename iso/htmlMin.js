@@ -13,8 +13,14 @@ export function htmlMin(html) {
       if (idx === 0 && i !== 0) {
         return pre;
       } else {
-        pre = pre.replaceAll('\n', ' ')
-          .replace(/[^< >]+ </g, (match) => {
+        pre = pre.replaceAll('\n', ' ');
+        while (pre.includes('<script> ')) {
+          pre = pre.replaceAll('<script> ', '<script>');
+        }
+        while (pre.includes(' </script>')) {
+          pre = pre.replaceAll(' </script>', '</script>');
+        }
+        pre = pre.replace(/[^< >]+ </g, (match) => {
             return match.replace(' <', '&nbsp;<');
           })
           .replaceAll(/> +[^< >]/g, (match) => {
