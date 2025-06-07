@@ -29,7 +29,7 @@ async function impWa(path) {
       bundle: true,
       minify: true,
       sourcemap: false,
-      target: 'es2019',
+      target: 'esnext',
       write: false,
     });
     result = buildResult.outputFiles[0].text;
@@ -68,13 +68,11 @@ async function impWa(path) {
   console.log('Output file created: ' + outPath);
 }
 
-export function build() {
+export async function build() {
   let indexArr = findFiles(CFG.srcDir, ['index.', '.js'], []);
   console.log('Processing DWA files:');
   console.log(indexArr);
-  indexArr.forEach((indexPath) => {
-    processIndex(indexPath);
-  });
+  await Promise.all(indexArr.map(processIndex));
 }
 
-build();
+await build();
