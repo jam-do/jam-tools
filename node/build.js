@@ -75,12 +75,14 @@ export async function build() {
   await Promise.all(indexArr.map(processIndex));
 }
 
-(async () => {
-  try {
-    await build();
+try {
+  await build().then(() => {
     process.exit(0);
-  } catch (e) {
+  }).catch((e) => {
     console.log(e.message);
     process.exit(1);
-  }
-})();
+  });
+} catch (e) {
+  console.log(e.message);
+  process.exit(1);
+}
